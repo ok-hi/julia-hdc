@@ -18,19 +18,10 @@ end
 
 # bsc bundling operation
 function +(a::hdc_vector, b::hdc_vector)
-    new_vec = init_vec()
-    count = 0
-    for (x, y) in zip(a.value, b.value)
-        count += 1
-        if x & y
-            new_vec.value[count] = 1
-        elseif x ⊻ y
-            new_vec.value[count] = rand(0:1)
-        else
-            new_vec.value[count] = 0
-        end
-    end
-    return new_vec
+    x = a.value + b.value
+    x[x .== 1] = rand(0:1, length(x[x .== 1]))
+    x[x .== 2] = ones(Int64, length(x[x .== 2]))
+    return init_vec(x)
 end
 
 # bsc binding operation
