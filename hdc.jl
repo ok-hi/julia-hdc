@@ -32,3 +32,14 @@ function +(a::hdc_vector, b::hdc_vector)
     end
     return new_vec
 end
+
+# bsc binding operation
+function *(a::hdc_vector, b::hdc_vector)
+    new_val = a.value .⊻ b.value
+    return init_vec(new_val)
+end
+
+# hamming distance
+function hdist(a::hdc_vector, b::hdc_vector)
+    return sum(a.value .!= b.value)
+end
