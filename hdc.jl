@@ -16,11 +16,11 @@ function init_vec(value = rand(0:1, vec_len))
     return hdc_vector(value)
 end
 
-# bsc bundling operation
+# bsc bundling operation (addition with a threshold of 1)
 function +(a::hdc_vector, b::hdc_vector)
     x = a.value + b.value
-    x[x .== 1] = rand(0:1, length(x[x .== 1]))
-    x[x .== 2] = ones(Int64, length(x[x .== 2]))
+    x[x .== 1] = rand(0:1, length(x[x .== 1])) # replace all ones in x with either a 1 or a 0 (random)
+    x[x .== 2] = ones(Int64, length(x[x .== 2])) # replace all twos with a 1
     return init_vec(x)
 end
 
