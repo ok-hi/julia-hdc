@@ -3,12 +3,26 @@ import Base: +, *
 
 # HYPERPARAMS
 rand_name_len = 12
-vec_len = 10
+vec_len = 10000
 
 # basic constructor for an hdc vector. really it's just a wrapper so you
 # don't have to call rand(0:1, vec_len) all the time
 struct hdc_vector
     value::Array{Bool,1}
+end
+
+struct item_memory
+    mem::Dict{String,hdc_vector}
+end
+
+function init_mem()
+    return item_memory(Dict{String,hdc_vector}())
+end
+
+function push(mem::item_memory, name = randstring(rand_name_len))
+    new_vec = init_vec()
+    push!(mem.mem, name => new_vec)
+    return new_vec
 end
 
 # init_vec is just a wrapper for initialization
