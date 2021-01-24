@@ -12,15 +12,17 @@ struct hdc_vector
     hdc_vector(value = rand(0:1, vec_len)) = new(value)
 end
 
+# wrapper for creating an item memory
 struct item_memory
     mem::Dict{String,hdc_vector}
     item_memory() = new(Dict{String,hdc_vector}())
 end
 
+# find the vector in an item memory with shortest hamming dist from a given vector
 function find(i::item_memory, v::hdc_vector)
     d = vec_len
     match = nothing
-    
+
     for (name, vec) in i.mem
         if hdist(v, vec) < d
             match = name
@@ -30,6 +32,7 @@ function find(i::item_memory, v::hdc_vector)
     return match, d
 end
 
+# add a vector to an item memory, optionally giving it a name
 function push(mem::item_memory, name = randstring(rand_name_len))
     new_vec = hdc_vector()
     push!(mem.mem, name => new_vec)
