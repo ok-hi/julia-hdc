@@ -17,6 +17,19 @@ struct item_memory
     item_memory() = new(Dict{String,hdc_vector}())
 end
 
+function find(i::item_memory, v::hdc_vector)
+    d = vec_len
+    match = nothing
+    
+    for (name, vec) in i.mem
+        if hdist(v, vec) < d
+            match = name
+            d = hdist(v, vec)
+        end
+    end
+    return match, d
+end
+
 function push(mem::item_memory, name = randstring(rand_name_len))
     new_vec = hdc_vector()
     push!(mem.mem, name => new_vec)
